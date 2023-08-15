@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx", // Sử dụng react-jsx thay vì react
+    "esModuleInterop": true
+  }
+}
