@@ -9,6 +9,8 @@ const data = {
       brand: 'iphone',
       category: 'mobile',
       color: 'Tím',
+      rating: 4,
+      numReviews: 10,
       content:
         'Máy mới 100% , chính hãng Apple Việt Nam CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam',
     },
@@ -21,6 +23,8 @@ const data = {
       brand: 'iphone',
       category: 'mobile',
       color: 'Vàng',
+      rating: 5,
+      numReviews: 10,
       content:
         'Máy mới 100% , chính hãng Apple Việt Nam CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam',
     },
@@ -33,6 +37,8 @@ const data = {
       brand: 'samsung',
       category: 'mobile',
       color: 'Xanh',
+      rating: 4,
+      numReviews: 10,
       content:
         'Máy mới 100% , chính hãng Apple Việt Nam CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam',
     },

@@ -1,3 +1,9 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+:root {
+  --primary: #1e466a;
+  --secondary: #9d1cb2;
+  --white: #ffffff;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,10 +13,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root {
-  --primary: #1e466a;
-  --secondary: #9d1cb2;
-  --white: #ffffff;
+.site-container {
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }
 
 header {
@@ -19,4 +27,12 @@ header {
   a {
     color: var(--white);
   }
+}
+
+.rating span {
+  color: #ffc000;
+}
+
+.img-large {
+  max-width: 100%;
 }

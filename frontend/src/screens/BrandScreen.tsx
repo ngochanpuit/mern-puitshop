@@ -1,23 +1,30 @@
-import { Link, useParams } from 'react-router-dom';
-import data from '../data';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Row, Col } from 'react-bootstrap';
+import Product from '../components/Product';
 export default function BrandScreen() {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get('/api/products');
+      setProducts(result.data);
+    };
+    fetchData();
+  }, []);
   const { category, brand } = useParams();
-  const productsInBrand = data.products.filter(
+  const productsInBrand = products.filter(
     (product) => product.category === category && product.brand === brand
   );
   return (
     <div className="brands">
-      {productsInBrand.map((product) => (
-        <div className="brand" key={product.slug}>
-          <Link to={`/${product.slug}`}>
-            <img src={product.image} alt={product.name} />
-            <div className="brand-item">
-              <h1>{product.name}</h1>
-            </div>
-          </Link>
-          <p>{product.price}</p>
-        </div>
-      ))}
+      <Row>
+        {productsInBrand.map((product) => (
+          <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+            <Product product={product}></Product>
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 }
