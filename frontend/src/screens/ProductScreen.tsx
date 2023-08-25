@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useContext, useEffect, useReducer } from 'react';
 import logger from 'use-reducer-logger';
@@ -23,6 +23,7 @@ const reducer = (state, action) => {
 };
 export default function ProductScreen() {
   const params = useParams();
+  const navigate = useNavigate();
   const { slug } = params;
   const [{ loading, error, product }, dispatch] = useReducer(logger(reducer), {
     product: [],
@@ -43,11 +44,21 @@ export default function ProductScreen() {
   }, [slug]);
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const addToCartHandler = () => {
+  const { cart } = state;
+  const addToCartHandler = async () => {
+    console.log('ádasd');
+    const existItem = cart.cartItems.find((item) => item._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock < quantity) {
+      window.alert('Sorry. Product is out of stock !');
+      return;
+    }
     ctxDispatch({
       type: 'CART_ADD_ITEM',
-      payload: { ...product, quantity: 1 },
+      payload: { ...product, quantity },
     });
+    navigate('/cart');
   };
 
   return loading ? (
@@ -78,14 +89,22 @@ export default function ProductScreen() {
             <Row>
               <Col>Status:</Col>
               <Col>
-                {product.quantity > 0 ? (
+                {product.countInStock > 0 ? (
                   <Badge bg="success">In stock</Badge>
                 ) : (
                   <Badge bg="danger">Unavailable</Badge>
                 )}
               </Col>
             </Row>
-            <Button onClick={addToCartHandler}>Add to cart</Button>
+            <div className="d-grid">
+              <Button
+                variant={product.countInStock === 0 ? 'danger' : 'primary'}
+                onClick={addToCartHandler}
+                disabled={product.countInStock === 0}
+              >
+                {product.countInStock > 0 && 'Add to cart'}
+              </Button>
+            </div>
           </ListGroup.Item>
         </ListGroup>
       </Col>
