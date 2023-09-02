@@ -1,10 +1,11 @@
-import React, { useEffect, useReducer } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useReducer } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logger from 'use-reducer-logger';
 import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { Store } from '../Store';
 const reducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -23,6 +24,11 @@ export default function HomeScreen() {
     loading: true,
     error: '',
   });
+  const navigate = useNavigate();
+  const { state } = useContext(Store);
+
+  const { userInfo } = state;
+
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
@@ -35,6 +41,12 @@ export default function HomeScreen() {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/signin');
+    }
+  }, [userInfo, navigate]);
   return (
     <div>
       <>

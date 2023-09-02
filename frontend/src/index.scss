@@ -1,4 +1,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~react-toastify/dist/ReactToastify.css';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
 :root {
   --primary: #1e466a;
   --secondary: #9d1cb2;
@@ -48,4 +51,13 @@ header {
 
 .small-container {
   max-width: 600px;
+}
+
+.checkout-steps > div {
+  border-bottom: 0.2rem solid #a0a0a0;
+}
+
+.checkout-steps > div.active {
+  border-bottom: 0.2rem solid red;
+  color: red;
 }
